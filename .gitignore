@@ -1,0 +1,8 @@
+node_modules
+bower_components
+*~
+*#
+.DS_STORE
+.idea
+coverage
+config/config.production.js
