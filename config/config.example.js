@@ -3,7 +3,7 @@ const config = {
   username: "foodscout",
   password: "foodscout",
   database: "foodscout",
-  host: "db",
+  host: "localhost",
   define: {
     "timestamps": false
   },

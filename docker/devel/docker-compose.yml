@@ -9,6 +9,9 @@ services:
       MYSQL_DATABASE: foodscout
       MYSQL_USER: foodscout
       MYSQL_PASSWORD: foodscout
+    ports:
+    - 3306:3306
+    restart: always
   api:
     depends_on:
       - db
@@ -16,10 +19,7 @@ services:
     links:
       - db
     ports:
-      - "8080:8080"
+      - 8080:8080
     volumes:
       - "./config:/usr/src/app/config"
-  web:
-    image: registry.foodscoutdomain.de/food-frontend
-    ports:
-      - 80:80
+    restart: always

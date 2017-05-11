@@ -1,9 +1,6 @@
 const winston = require('winston');
 const config = require('./config');
 
-//noinspection BadExpressionStatementJS
-require('winston-papertrail').Papertrail;
-
 const customLevels = {
   levels: {
     debug: 3,
