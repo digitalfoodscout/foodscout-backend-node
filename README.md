@@ -18,7 +18,7 @@ Ohne Docker
 
 Hierzu muss ein lokakler Datenbank-Server auf dem System installiert werden.
 
-1. Die Datei `config.example.js` im config-Verzeichnis in `config.js` umbennnen und der eigenen Konfiguration anpassen.
+1. Die Datei `config.js` im config-Verzeichnis in `config.js` umbennnen und der eigenen Konfiguration anpassen.
 2. `npm install` im Hauptverzeichnis aufrufen
 3. Lokale MariaDB-Instanz starten
 4. Server mit `node app.js` starten
