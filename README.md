@@ -37,3 +37,8 @@ Migration für Models anpassen
 1. Neue Migrationsdatei mit `sequelize migration:create` erstellen
 2. Die Änderungen an den Models in diese Dateien eintragen
 3. Migration mit `sequelize db:migrate` zur Datenbank pushen
+
+Weitere Informationen für Migrations
+------------------------------------
+
+Alles wichtige steht in der offiziellen Dokumentation unter: http://docs.sequelizejs.com/manual/tutorial/migrations.html
