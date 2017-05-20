@@ -28,7 +28,8 @@ Migration auf lokale DB übertragen
 ----------------------------------
 
 Lokale Datenbank muss dabei installiert sein (getestet von mir mit einer lokalen MariaDB Instanz)
-1. `sequelize db:migrate` aufrufen
+1. `npm install --save sequelize-cli -g` aufrufen um auf sequelize zugreifen zu können
+2. `sequelize db:migrate` aufrufen
     Hierbei wird die Migrationsdatei in eine Datenbank übersetzt
 
 Migration für Models anpassen
