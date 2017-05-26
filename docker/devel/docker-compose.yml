@@ -9,8 +9,11 @@ services:
       MYSQL_DATABASE: foodscout
       MYSQL_USER: foodscout
       MYSQL_PASSWORD: foodscout
+      LANG: C.UTF-8
     ports:
     - 3306:3306
+    volumes:
+    - "./import:/docker-entrypoint-initdb.d"
     restart: always
   api:
     depends_on:
@@ -23,3 +26,10 @@ services:
     volumes:
       - "./config:/usr/src/app/config"
     restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: foodscout_phpmyadmin
+    ports:
+    - 80:80
+    links:
+    - db

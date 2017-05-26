@@ -32,9 +32,9 @@ module.exports = function (app, passport, models, helpers) {
         return sequelize.transaction(function (t) {
             // chain all your queries here. make sure you return them.
             return models.User.create({
-                username: req.context.name,
-                email: req.context.email,
-                password: req.context.password
+                username: req.body.name,
+                email: req.body.email,
+                password: req.body.password
             });
         }).then(function (result) {
             // Transaction has been committed
