@@ -39,7 +39,7 @@ module.exports = function (app, passport, models, helpers) {
         }).then(function (result) {
             // Transaction has been committed
             // result is whatever the result of the promise chain returned to the transaction callback
-            res.send('Result: ' + result);
+            res.send(201);
         }).catch(function (err) {
             // Transaction has been rolled back
             // err is whatever rejected the promise chain returned to the transaction callback
