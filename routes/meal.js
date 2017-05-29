@@ -24,8 +24,32 @@ module.exports = function (app, passport, models, helpers) {
     // Protected route that requries authentication via authorization header
     app.get('/meal', function (req, res, next) {
         //usage of query parameters: req.query.query_parameter
-        var test = models.Meal.findAll({})
-            .then(meals => res.send(meals));
+        return models.Meal.findAll({}).then(meals => res.send(meals));
+    });
+
+    app.get('/meal/:id', function (req, res, next) {
+        //usage of query parameters: req.query.query_parameter
+        return models.Meal.findById(req.params.id)
+                .then(meal => res.send(meal))
+                .catch(function (err) {
+                  res.send('Error: ' + err);
+                });
+    });
+
+    app.del('/meal/:id', function (req, res, next) {
+        models.Meal.destroy({
+            where: {
+                'id' : req.params.id
+            }
+        }).then(function (result) {
+            res.send('Result: ' + result);
+        }).catch(function (err) {
+            res.send('Error: ' + err);
+        });
+    });
+
+    app.put('/meal', function (req, res, next) {
+        //TODO
     });
 
     app.post('/meal', function (req, res, next) {

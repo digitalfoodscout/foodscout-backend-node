@@ -23,9 +23,35 @@ if (config.use_env_variable) {
 module.exports = function (app, passport, models, helpers) {
     // Protected route that requries authentication via authorization header
     app.get('/fooddiaryentry', function (req, res, next) {
-        //usage of query parameters: req.query.query_parameter
-        var test = models.FoodDiaryEntry.findAll({})
-            .then(fooddiaryentries => res.send(fooddiaryentries));
+        return models.FoodDiaryEntry.findAll({})
+                .then(fooddiaryentries => res.send(fooddiaryentries))
+                .catch(function (err) {
+                    res.send('Error ${err}');
+        });
+    });
+
+    app.get('/fooddiaryentry/:id', function (req, res, next) {
+        return models.FoodDiaryEntry.findById(req.params.id)
+            .then(fooddiaryentry => res.send(fooddiaryentry))
+            .catch(function (err) {
+                res.send('Error: ' + err);
+             });
+    });
+
+    app.del('/fooddiaryentry/:id', function (req, res, next) {
+        models.FoodDiaryEntry.destroy({
+            where: {
+                'id' : req.params.id
+            }
+        }).then(function (result) {
+            res.send('Result: ' + result);
+        }).catch(function (err) {
+            res.send('Error: ' + err);
+        });
+    });
+
+    app.put('/fooddiaryentry', function (req, res, next) {
+        //TODO
     });
 
     app.post('/fooddiaryentry', function (req, res, next) {

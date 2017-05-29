@@ -28,6 +28,30 @@ module.exports = function (app, passport, models, helpers) {
             .then(symptomdiaryentries => res.send(symptomdiaryentries));
     });
 
+    app.get('/symptomdiaryentry/:id', function (req, res, next) {
+        return models.SymptomDiaryEntry.findById(req.params.id)
+                .then(stresslevel => res.send(stresslevel))
+                .catch(function (err) {
+                    res.send('Error: ' + err);
+                });
+    });
+
+    app.del('/symptomdiaryentry/:id', function (req, res, next) {
+        models.SymptomDiaryEntry.destroy({
+            where: {
+                'id' : req.params.id
+            }
+        }).then(function (result) {
+            res.send('Result: ' + result);
+        }).catch(function (err) {
+            res.send('Error: ' + err);
+        });
+    });
+
+    app.put('/symptomdiaryentry', function (req, res, next) {
+        //TODO
+    });
+
     app.post('/symptomdiaryentry', function (req, res, next) {
         return sequelize.transaction(function (t) {
             // chain all your queries here. make sure you return them.
