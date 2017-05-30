@@ -53,12 +53,25 @@ module.exports = function (app, passport, models, helpers) {
     });
 
     app.post('/user', function (req, res, next) {
+
+        // Use package password-hash-and-salt
+        var password = require('password-hash-and-salt');
+        // Creating hash and salt
+        password(req.body.password).hash(function(error, hash) {
+            if (error)
+                throw new Error('Something went wrong at Hashing!');
+        }
+
+
+
+
         return sequelize.transaction(function (t) {
             // chain all your queries here. make sure you return them.
             return models.User.create({
                 username: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                // Store hash (incl. algorithm, iterations, and salt)
+                password: hash
             });
         }).then(function (result) {
             // Transaction has been committed

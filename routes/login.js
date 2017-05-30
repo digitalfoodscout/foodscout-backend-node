@@ -31,6 +31,17 @@ module.exports = function(app, passport, models) {
           return next(new restify.errors.InternalServerError());
         }
 
+          // Verifying a hash
+          password(req.body.password).verifyAgainst(user.password, function(error, verified) {
+              if(error)
+                  throw new Error('Something went wrong at password verify!');
+              if(!verified) {
+                  console.log("Don't try! We got you! Password wrong!");
+              } else {
+                  console.log("Password right!");
+              }
+
+
         const token = buf.toString('base64').replace(/\//g, '0');
 
         const expireDate = new Date();
