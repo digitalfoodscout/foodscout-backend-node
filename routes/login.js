@@ -40,7 +40,7 @@ module.exports = function(app, passport, models) {
               } else {
                   console.log("Password right!");
               }
-          }
+          });
 
 
         const token = buf.toString('base64').replace(/\//g, '0');
