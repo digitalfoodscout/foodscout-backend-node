@@ -33,13 +33,14 @@ module.exports = function(app, passport, models) {
 
           // Verifying a hash
           password(req.body.password).verifyAgainst(user.password, function(error, verified) {
-              if(error)
+              if (error)
                   throw new Error('Something went wrong at password verify!');
-              if(!verified) {
+              if (!verified) {
                   console.log("Don't try! We got you! Password wrong!");
               } else {
                   console.log("Password right!");
               }
+          }
 
 
         const token = buf.toString('base64').replace(/\//g, '0');
