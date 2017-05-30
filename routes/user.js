@@ -60,7 +60,7 @@ module.exports = function (app, passport, models, helpers) {
         password(req.body.password).hash(function(error, hash) {
             if (error)
                 throw new Error('Something went wrong at Hashing!');
-        }
+        });
 
 
 
