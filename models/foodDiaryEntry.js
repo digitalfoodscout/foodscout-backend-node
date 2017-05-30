@@ -11,6 +11,16 @@ module.exports = function(sequelize, DataTypes) {
         date: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        mealId: {
+                type: DataTypes.INTEGER,
+                references: 'Meals',
+                referencesKey: 'id'
+        },
+        userId:{
+            type: DataTypes.INTEGER,
+            references: 'Users',
+            referencesKey: 'id'
         }
     }, {
         classMethods: {
