@@ -60,28 +60,26 @@ module.exports = function (app, passport, models, helpers) {
         password(req.body.password).hash(function(error, hash) {
             if (error)
                 throw new Error('Something went wrong at Hashing!');
-        });
-
-
-
-
-        return sequelize.transaction(function (t) {
-            // chain all your queries here. make sure you return them.
-            return models.User.create({
-                username: req.body.name,
-                email: req.body.email,
-                // Store hash (incl. algorithm, iterations, and salt)
-                password: hash
+            return sequelize.transaction(function (t) {
+                // chain all your queries here. make sure you return them.
+                return models.User.create({
+                    username: req.body.name,
+                    email: req.body.email,
+                    // Store hash (incl. algorithm, iterations, and salt)
+                    password: hash
+                });
+            }).then(function (result) {
+                // Transaction has been committed
+                // result is whatever the result of the promise chain returned to the transaction callback
+                res.send(201);
+            }).catch(function (err) {
+                // Transaction has been rolled back
+                // err is whatever rejected the promise chain returned to the transaction callback
+                res.send('Error: ' + err);
             });
-        }).then(function (result) {
-            // Transaction has been committed
-            // result is whatever the result of the promise chain returned to the transaction callback
-            res.send(201);
-        }).catch(function (err) {
-            // Transaction has been rolled back
-            // err is whatever rejected the promise chain returned to the transaction callback
-            res.send('Error: ' + err);
         });
+
+
     });
 }
 ;
