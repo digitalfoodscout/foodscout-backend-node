@@ -23,3 +23,23 @@ Hierzu muss ein lokaler Datenbank-Server auf dem System installiert werden.
 2. `npm install` im Hauptverzeichnis aufrufen.
 3. Lokale MariaDB-Instanz starten.
 4. Server mit `node app.js` starten.
+
+Migration auf lokale DB übertragen
+----------------------------------
+
+Lokale Datenbank muss dabei installiert sein (getestet von mir mit einer lokalen MariaDB Instanz)
+1. `npm install --save sequelize-cli -g` aufrufen um auf sequelize zugreifen zu können
+2. `sequelize db:migrate` aufrufen
+    Hierbei wird die Migrationsdatei in eine Datenbank übersetzt
+
+Migration für Models anpassen
+-----------------------------
+
+1. Neue Migrationsdatei mit `sequelize migration:create` erstellen
+2. Die Änderungen an den Models in diese Dateien eintragen
+3. Migration mit `sequelize db:migrate` zur Datenbank pushen
+
+Weitere Informationen für Migrations
+------------------------------------
+
+Alles wichtige steht in der offiziellen Dokumentation unter: http://docs.sequelizejs.com/manual/tutorial/migrations.html
