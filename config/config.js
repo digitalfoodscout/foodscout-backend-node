@@ -17,3 +17,4 @@ module.exports =
   test: config,
   production: config
 };
+

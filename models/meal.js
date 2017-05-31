@@ -15,6 +15,12 @@ module.exports = function(sequelize, DataTypes) {
         public: {
             type: DataTypes.BOOLEAN,
             allowNull: false
+        },
+        userId:{
+            type: DataTypes.INTEGER,
+            references: 'Users',
+            referencesKey: 'id',
+            allowNull: true
         }
     }, {
         classMethods: {

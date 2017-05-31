@@ -15,6 +15,16 @@ module.exports = function(sequelize, DataTypes) {
         intensity: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        symptomId:{
+            type: DataTypes.INTEGER,
+            references: 'Symptoms',
+            referencesKey: 'id'
+        },
+        userId:{
+            type: DataTypes.INTEGER,
+            references: 'Users',
+            referencesKey: 'id'
         }
     }, {
         classMethods: {
