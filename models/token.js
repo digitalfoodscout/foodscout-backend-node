@@ -8,10 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     expires: {
       type: DataTypes.DATE,
-      allowNull: false,
-      //validate: {
-      //  isAfter: new Date()
-      //}
+      allowNull: false
     }
   }, {
     hooks: {

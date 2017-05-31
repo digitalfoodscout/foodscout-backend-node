@@ -32,11 +32,29 @@ module.exports = {
                         User.hasMany(models.Token);
                     }
                 }
-            },
-            {
-                engine: 'MYISAM',                     // default: 'InnoDB'
-                charset: 'latin1',                    // default: null
-                schema: 'public'                      // default: public, PostgreSQL only.
+            }
+        );
+        queryInterface.createTable(
+            "Tokens", {
+                token: {
+                    type: Sequelize.STRING,
+                    unique: true,
+                    allowNull: false,
+                    primaryKey: true,
+                },
+                expires: {
+                    type: Sequelize.DATE,
+                    allowNull: false
+                },
+                UserId: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                        model: 'Users',
+                        key: ''
+                    },
+                    onUpdate: 'cascade',
+                    onDelete: 'cascade'
+                }
             }
         );
         queryInterface.createTable(
@@ -58,11 +76,6 @@ module.exports = {
                         //TODO
                     }
                 }
-            },
-            {
-                engine: 'MYISAM',                     // default: 'InnoDB'
-                charset: 'latin1',                    // default: null
-                schema: 'public'                      // default: public, PostgreSQL only.
             }
         );
         queryInterface.createTable(
@@ -167,6 +180,7 @@ module.exports = {
          Example:
          return queryInterface.dropTable('users');
          */
+        queryInterface.dropTable('Tokens');
         queryInterface.dropTable('Users');
         queryInterface.dropTable('Meals');
         queryInterface.dropTable('FoodDiaryEntries');
