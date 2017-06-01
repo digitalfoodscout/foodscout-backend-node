@@ -1,5 +1,5 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Token = sequelize.define("Token", {
     token: {
       type: DataTypes.STRING,
@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     classMethods: {
-      associate: function(models) {
+      associate: function (models) {
         Token.belongsTo(models.User);
       }
     }

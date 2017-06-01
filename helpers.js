@@ -19,7 +19,7 @@ module.exports = function (passport, restify) {
       })(req, res);
     },
     handleDBError: function (err, next) {
-      if(err.name === "SequelizeValidationError") {
+      if (err.name === "SequelizeValidationError") {
         next(new restify.errors.BadRequestError("Validation failed"));
       }
       else {

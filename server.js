@@ -9,9 +9,7 @@ module.exports = {
 
     restify.CORS.ALLOW_HEADERS.push('authorization');
 
-    const app = restify.createServer({
-
-    });
+    const app = restify.createServer({});
 
     app.pre(function (req, res, next) {
       res.setHeader('Content-Type', 'application/json');

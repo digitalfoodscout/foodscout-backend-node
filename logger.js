@@ -22,7 +22,7 @@ const loggerOpts = {
   transports: []
 };
 
-if(config.logger.console === true) {
+if (config.logger.console === true) {
   loggerOpts.transports.push(new winston.transports.Console({
     levels: customLevels.levels,
     colorize: true
