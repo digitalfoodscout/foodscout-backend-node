@@ -8,7 +8,7 @@
     "mysql": "^2.10.2",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
-    "passport-oauth2-resource-owner-password": "^1.0.0",
+    "passport-local": "^1.0.0",
     "password-hash-and-salt": "^0.1.4",
     "restify": "^4.0.4",
     "sequelize": "^3.19.3",

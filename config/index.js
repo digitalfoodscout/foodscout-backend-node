@@ -7,6 +7,4 @@ config.logger = {
   console: true
 };
 
-config.clients = ["webapp"];
-
 module.exports = config;

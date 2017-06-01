@@ -4,9 +4,9 @@ const logger = require('../logger');
 
 module.exports = function (app, passport, models) {
     app.post('/authorize', function (req, res, next) {
-        passport.authenticate('oauth2-resource-owner-password', function (err, client, user) {
+        passport.authenticate('local', function (err, user) {
             if (err) {
-                if (err === "Client not found") {
+                if (err === "User not found") {
                     res.setHeader("WWW-Authenticate", 'xBasic realm="fake"');
                     return next(new restify.errors.InvalidCredentialsError());
                 }
@@ -14,11 +14,6 @@ module.exports = function (app, passport, models) {
                     logger.error(err.stack);
                     return next(new restify.errors.InternalServerError());
                 }
-            }
-
-            if (!client) {
-                res.setHeader("WWW-Authenticate", 'xBasic realm="fake"');
-                return next(new restify.errors.InvalidCredentialsError());
             }
 
             if (!user) {
