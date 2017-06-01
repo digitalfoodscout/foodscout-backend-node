@@ -19,14 +19,15 @@
     "url": ""
   },
   "devDependencies": {
+    "mocha-eslint": "^3.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
     "sequelize-fixtures": "^0.5.6",
     "should": "^11.2.1",
     "supertest": "^3.0.0"
-
   },
   "scripts": {
+    "lint": "mocha -R spec test/linter.test.js",
     "test": "NODE_ENV=test mocha -R spec -b --recursive",
     "coverage": "NODE_ENV=test ./node_modules/istanbul/lib/cli.js cover -x \"**/config/**\" ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec -t 5000 --recursive",
     "start": "node app.js"

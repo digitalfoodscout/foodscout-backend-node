@@ -5,8 +5,13 @@ module.exports = {
   },
   extends: 'eslint:recommended',
   env: {
+    mocha: true,
     node: true,
     es6: true
+  },
+  globals: {
+    url: true,
+    models: true
   },
   rules: {
     // require or disallow use of semicolons instead of ASI
@@ -315,6 +320,6 @@ module.exports = {
     'no-multi-spaces': 'error',
 
     // disallow declaration of variables that are not used in the code
-    'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
+    'no-unused-vars': ['off', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
   }
 };
