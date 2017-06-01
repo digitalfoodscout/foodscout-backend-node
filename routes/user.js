@@ -30,7 +30,8 @@ module.exports = function (app, passport, models, helpers) {
 
   app.get('/user/:id', function (req, res, next) {
     return models.User.findById(req.params.id)
-      .then(stresslevel => res.send(stresslevel))
+        .then(user = > res.send(user)
+    )
       .catch(function (err) {
         res.send('Error: ' + err);
       });

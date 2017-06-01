@@ -30,7 +30,8 @@ module.exports = function (app, passport, models, helpers) {
 
   app.get('/symptomdiaryentry/:id', function (req, res, next) {
     return models.SymptomDiaryEntry.findById(req.params.id)
-      .then(stresslevel => res.send(stresslevel))
+        .then(symptomdiaryentry = > res.send(symptomdiaryentry)
+    )
       .catch(function (err) {
         res.send('Error: ' + err);
       });
