@@ -1,4 +1,5 @@
 "use strict";
+const Sequelize = require("sequelize");
 
 module.exports = function (sequelize, DataTypes) {
     const User = sequelize.define("User", {
@@ -20,7 +21,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         password: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING(270),
             allowNull: false
         }
     }, {

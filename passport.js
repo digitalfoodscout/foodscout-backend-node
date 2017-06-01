@@ -12,7 +12,7 @@ module.exports = function (models) {
             if (config.clients.includes(clientId)) {
                 models.User.findOne({where: {username: username}}).then(function (user) {
 
-                    logincheck.checkLogin(username, password, user.password).then(function (isValid) {
+                    logincheck.checkLogin(password, user.password).then(function (isValid) {
                         if (isValid) {
                             done(null, clientId, user.get({plain: true}));
                         }
