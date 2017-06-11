@@ -18,13 +18,17 @@ module.exports = function (sequelize, DataTypes) {
     },
     symptomId: {
       type: DataTypes.INTEGER,
-      references: 'Symptoms',
-      referencesKey: 'id'
+      references: {
+        model: "Symptoms",
+        key: "id"
+      },
     },
     userId: {
       type: DataTypes.INTEGER,
-      references: 'Users',
-      referencesKey: 'id'
+      references:{
+        model: "Users",
+        key: "id"
+      },
     }
   }, {
     classMethods: {

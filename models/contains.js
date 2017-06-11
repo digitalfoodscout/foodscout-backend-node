@@ -14,8 +14,10 @@ module.exports = function (sequelize, DataTypes) {
     },
     dish_id: {
       type: DataTypes.INTEGER,
-      references: 'Meals',
-      referencesKey: 'id',
+      references: {
+        model: "Meals",
+        key: "id"
+      },
       allowNull: false
     },
     food_id: {
