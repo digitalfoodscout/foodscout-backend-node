@@ -86,7 +86,7 @@ module.exports = function (app, passport, models, helpers) {
     // TODO
   });
 
-  //TODO: Insert correct UserId
+  // TODO: Insert correct UserId
   app.post('/meal', (req, res, next) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
        models.Meal.create({
