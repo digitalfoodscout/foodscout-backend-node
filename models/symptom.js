@@ -12,12 +12,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: function (models) {
-        // TODO
-      }
-    }
   });
   return Symptom;
 };

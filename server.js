@@ -46,7 +46,7 @@ module.exports = {
       res.send(new restify.errors.InternalError());
     });
 
-    models.sequelize.sync().then(() => {
+    models.sequelize.sync({ alter: true }).then(() => {
       const port = process.env.PORT || 8080;
       app.listen(port, () => {
         logger.info('%s listening at %s', app.name, app.url);

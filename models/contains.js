@@ -24,12 +24,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     }
-  }, {
-    classMethods: {
-      associate: function (models) {
-        // TODO
-      }
-    }
   });
   return Contains;
 };

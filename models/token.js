@@ -20,12 +20,9 @@ module.exports = function (sequelize, DataTypes) {
         }
         cb(null, token);
       }
-    },
-    classMethods: {
-      associate: function (models) {
-        Token.belongsTo(models.User);
-      }
-    }
-  });
+    } });
+  Token.associate = function (models) {
+    Token.belongsTo(models.User);
+  };
   return Token;
 };

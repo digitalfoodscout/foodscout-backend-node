@@ -30,12 +30,6 @@ module.exports = function (sequelize, DataTypes) {
         key: "id"
       },
     }
-  }, {
-    classMethods: {
-      associate: function (models) {
-        // TODO
-      }
-    }
   });
   return Suffered_From;
 };
