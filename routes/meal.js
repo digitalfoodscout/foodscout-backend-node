@@ -23,48 +23,36 @@ if (config.use_env_variable) {
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
   app.get('/meal', (req, res, next) => {
+    const options = {};
     if (Object.keys(req.query).length > 0) {
-      if (req.query.limit && req.query.offset && req.query.ordercol && req.query.order) {
-        models.Meal.findAll({
-          order: sequelize.literal(`${req.query.ordercol} ${req.query.order}`),
-          offset: parseInt(req.query.offset),
-          limit: parseInt(req.query.limit)
-        }).then(meals => res.send(meals)).catch(err => {
-          res.send(`Error: ${err}`);
-        });
-      } else if (req.query.limit && req.query.offset && req.query.order) {
-        models.Meal.findAll({
-          order: sequelize.literal(`name ${req.query.order}`),
-          offset: parseInt(req.query.offset),
-          limit: parseInt(req.query.limit)
-        }).then(meals => res.send(meals)).catch(err => {
-          res.send(`Error: ${err}`);
-        });
-      } else if (req.query.limit && req.query.offset) {
-        models.Meal.findAll({
-          offset: parseInt(req.query.offset),
-          limit: parseInt(req.query.limit)
-        }).then(meals => res.send(meals)).catch(err => {
-          res.send(`Error: ${err}`);
-        });
-      } else if (req.query.ordercol && req.query.order) {
-        models.Meal.findAll({
-          order: sequelize.literal(`${req.query.ordercol} ${req.query.order}`)
-        }).then(meals => res.send(meals)).catch(err => {
-          res.send(`Error: ${err}`);
-        });
+      if (req.query.limit) {
+        options.limit = parseInt(req.query.limit);
       }
-    } else {
-      // usage of query parameters: req.query.query_parameter
-      models.Meal.findAll({}).then(meals => res.send(meals));
+      if (req.query.limit && req.query.offset) {
+        options.offset = parseInt(req.query.offset);
+      }
+      if (req.query.order && req.query.col) {
+        options.order = sequelize.literal(`${req.query.col} ${req.query.order}`);
+      } else if (req.query.order) {
+        options.order = sequelize.literal(`name ${req.query.order}`);
+      }
+      if (req.query.name) {
+        options.where = {
+          name: {
+            $like: `${req.query.name}%`
+          }
+        };
+      }
     }
-  })
-  ;
+    models.Meal.findAll(options).then(meals => res.send(meals)).catch(err => {
+      res.send(`Error: ${err}`);
+    });
+  });
 
 
   app.get('/meal/:id', (req, res, next) =>
     // usage of query parameters: req.query.query_parameter
-     models.Meal.findById(req.params.id)
+    models.Meal.findById(req.params.id)
       .then(meal => res.send(meal))
       .catch(err => {
         res.send(`Error: ${err}`);
@@ -88,19 +76,19 @@ module.exports = function (app, passport, models, helpers) {
 
   // TODO: Insert correct UserId
   app.post('/meal', (req, res, next) => sequelize.transaction(t =>
-      // chain all your queries here. make sure you return them.
-       models.Meal.create({
-         name: req.body.name,
-         public: true,
-         user_id: 1,
-         date: new Date(Date.now())
-       })).then(result => {
-      // Transaction has been committed
-      // result is whatever the result of the promise chain returned to the transaction callback
-         res.send(`Result: ${result}`);
-       }).catch(err => {
-      // Transaction has been rolled back
-      // err is whatever rejected the promise chain returned to the transaction callback
-         res.send(`Error: ${err}`);
-       }));
+    // chain all your queries here. make sure you return them.
+    models.Meal.create({
+      name: req.body.name,
+      public: true,
+      user_id: 1,
+      date: new Date(Date.now())
+    })).then(result => {
+    // Transaction has been committed
+    // result is whatever the result of the promise chain returned to the transaction callback
+      res.send(`Result: ${result}`);
+    }).catch(err => {
+    // Transaction has been rolled back
+    // err is whatever rejected the promise chain returned to the transaction callback
+      res.send(`Error: ${err}`);
+    }));
 };
