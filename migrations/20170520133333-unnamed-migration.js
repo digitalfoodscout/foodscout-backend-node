@@ -28,7 +28,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO Errorfix
+            // TODO Errorfix
             User.hasMany(models.Token);
           }
         }
@@ -73,7 +73,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO
+            // TODO
           }
         }
       }
@@ -98,7 +98,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO
+            // TODO
           }
         }
       });
@@ -122,7 +122,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO
+            // TODO
           }
         }
       });
@@ -142,7 +142,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO
+            // TODO
           }
         }
       });
@@ -166,7 +166,7 @@ module.exports = {
       }, {
         classMethods: {
           associate: function (models) {
-            //TODO
+            // TODO
           }
         }
       });

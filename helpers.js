@@ -4,7 +4,7 @@ const logger = require('./logger');
 module.exports = function (passport, restify) {
   return {
     authenticateUser: function (req, res, next) {
-      passport.authenticate('bearer', function (err, user, info) {
+      passport.authenticate('bearer', (err, user, info) => {
         if (err) {
           logger.error("Uncaught Error:", err.stack);
           return res.send(new restify.InternalServerError());
@@ -21,11 +21,10 @@ module.exports = function (passport, restify) {
     handleDBError: function (err, next) {
       if (err.name === "SequelizeValidationError") {
         next(new restify.errors.BadRequestError("Validation failed"));
-      }
-      else {
+      } else {
         logger.error(err);
         next(new restify.errors.InternalServerError(err));
       }
     }
-  }
+  };
 };

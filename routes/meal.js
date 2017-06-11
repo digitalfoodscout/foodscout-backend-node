@@ -5,7 +5,7 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+const config = require(`${__dirname}/../config/config.js`)[env];
 const logger = require('../logger');
 
 config.logging = logger.debug;
@@ -22,51 +22,46 @@ if (config.use_env_variable) {
 
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
-  app.get('/meal', function (req, res, next) {
-    //usage of query parameters: req.query.query_parameter
-    return models.Meal.findAll({}).then(meals => res.send(meals));
-  });
+  app.get('/meal', (req, res, next) => 
+    // usage of query parameters: req.query.query_parameter
+     models.Meal.findAll({}).then(meals => res.send(meals)));
 
-  app.get('/meal/:id', function (req, res, next) {
-    //usage of query parameters: req.query.query_parameter
-    return models.Meal.findById(req.params.id)
+  app.get('/meal/:id', (req, res, next) => 
+    // usage of query parameters: req.query.query_parameter
+     models.Meal.findById(req.params.id)
       .then(meal => res.send(meal))
-      .catch(function (err) {
-        res.send('Error: ' + err);
-      });
-  });
+      .catch(err => {
+        res.send(`Error: ${err}`);
+      }));
 
-  app.del('/meal/:id', function (req, res, next) {
+  app.del('/meal/:id', (req, res, next) => {
     models.Meal.destroy({
       where: {
         'id': req.params.id
       }
-    }).then(function (result) {
-      res.send('Result: ' + result);
-    }).catch(function (err) {
-      res.send('Error: ' + err);
+    }).then(result => {
+      res.send(`Result: ${result}`);
+    }).catch(err => {
+      res.send(`Error: ${err}`);
     });
   });
 
-  app.put('/meal', function (req, res, next) {
-    //TODO
+  app.put('/meal', (req, res, next) => {
+    // TODO
   });
 
-  app.post('/meal', function (req, res, next) {
-    return sequelize.transaction(function (t) {
+  app.post('/meal', (req, res, next) => sequelize.transaction(t => 
       // chain all your queries here. make sure you return them.
-      return models.Meal.create({
-        name: req.body.name,
-        public: true
-      });
-    }).then(function (result) {
+       models.Meal.create({
+         name: req.body.name,
+         public: true
+       })).then(result => {
       // Transaction has been committed
       // result is whatever the result of the promise chain returned to the transaction callback
-      res.send('Result: ' + result);
-    }).catch(function (err) {
+         res.send(`Result: ${result}`);
+       }).catch(err => {
       // Transaction has been rolled back
       // err is whatever rejected the promise chain returned to the transaction callback
-      res.send('Error: ' + err);
-    });
-  });
+         res.send(`Error: ${err}`);
+       }));
 };

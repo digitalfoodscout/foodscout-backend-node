@@ -8,42 +8,39 @@ module.exports = function (models) {
   const BearerStrategy = require('passport-http-bearer').Strategy;
 
   passport.use(new LocalStrategy({
-      usernameField: 'username',
-      passwordField: 'password',
-      session: false
-    },
-    function (username, password, done) {
-      models.User.findOne({where: {username: username}}).then(function (user) {
+    usernameField: 'username',
+    passwordField: 'password',
+    session: false
+  },
+    (username, password, done) => {
+      models.User.findOne({ where: { username: username } }).then(user => {
         if (!user) {
           return (done(null, null));
         }
-        logincheck.checkLogin(password, user.password).then(function (isValid) {
+        logincheck.checkLogin(password, user.password).then(isValid => {
           if (isValid) {
-            done(null, user.get({plain: true}));
-          }
-          else {
+            done(null, user.get({ plain: true }));
+          } else {
             done(null, null);
           }
-        }).catch(function (err) {
+        }).catch(err => {
           done(err);
         });
-      })
+      });
     }
   ));
 
-  passport.use(new BearerStrategy(function (token, done) {
+  passport.use(new BearerStrategy((token, done) => {
     models.Token.findOne({
-      where: {token: token, expires: {$gte: new Date()}},
+      where: { token: token, expires: { $gte: new Date() } },
       include: [models.User]
-    }).then(function (token) {
+    }).then(token => {
       if (!token) {
         return done(null, false);
       }
 
       return done(null, token.User);
-    }).catch(function (error) {
-      return done(error);
-    })
+    }).catch(error => done(error));
   }));
 
   return passport;

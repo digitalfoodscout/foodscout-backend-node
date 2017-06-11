@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function (models) {
-        //TODO Errorfix
+        // TODO Errorfix
         User.hasMany(models.Token);
       }
     }

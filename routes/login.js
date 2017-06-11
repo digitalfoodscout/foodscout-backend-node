@@ -3,14 +3,13 @@ const restify = require('restify');
 const logger = require('../logger');
 
 module.exports = function (app, passport, models) {
-  app.post('/authorize', function (req, res, next) {
-    passport.authenticate('local', function (err, user) {
+  app.post('/authorize', (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
       if (err) {
         if (err === "User not found") {
           res.setHeader("WWW-Authenticate", 'xBasic realm="fake"');
           return next(new restify.errors.InvalidCredentialsError());
-        }
-        else {
+        } else {
           logger.error(err.stack);
           return next(new restify.errors.InternalServerError());
         }
@@ -21,7 +20,7 @@ module.exports = function (app, passport, models) {
         return next(new restify.errors.InvalidCredentialsError());
       }
 
-      require('crypto').randomBytes(180, function (ex, buf) {
+      require('crypto').randomBytes(180, (ex, buf) => {
         if (ex) {
           return next(new restify.errors.InternalServerError());
         }
@@ -32,8 +31,7 @@ module.exports = function (app, passport, models) {
         const expireDate = new Date();
         expireDate.setDate(expireDate.getDate() + 1);
 
-        models.Token.create({token: token, UserId: user.id, expires: expireDate}).then(function () {
-
+        models.Token.create({ token: token, UserId: user.id, expires: expireDate }).then(() => {
           const result = {
             access_token: token,
             expires_in: 60 * 60,  // 1 hour
@@ -42,7 +40,7 @@ module.exports = function (app, passport, models) {
 
           res.send(200, result);
           return next();
-        }).catch(function (err) {
+        }).catch(err => {
           logger.error(err);
           return next(new restify.errors.InternalServerError());
         });

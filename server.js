@@ -11,7 +11,7 @@ module.exports = {
 
     const app = restify.createServer({});
 
-    app.pre(function (req, res, next) {
+    app.pre((req, res, next) => {
       res.setHeader('Content-Type', 'application/json');
       res.charSet('utf-8');
       next();
@@ -36,12 +36,12 @@ module.exports = {
     const helpers = require('./helpers')(passport, restify);
     require('./routes')(app, passport, models, helpers);
 
-    app.on('InternalServer', function (req, res, err, cb) {
+    app.on('InternalServer', (req, res, err, cb) => {
       logger.error("Internal Error:", err);
       return cb();
     });
 
-    app.on('uncaughtException', function (req, res, route, err) {
+    app.on('uncaughtException', (req, res, route, err) => {
       logger.error("Uncaught Error:", err.stack);
       res.send(new restify.errors.InternalError());
     });

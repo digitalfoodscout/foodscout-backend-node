@@ -1,16 +1,11 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
 const Sequelize = require("sequelize");
-const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+const config = require(`${__dirname}/../config/config.js`)[env];
 const logger = require('../logger');
 
 config.logging = logger.debug;
-
-const db = {};
 
 let sequelize;
 
@@ -20,54 +15,49 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-module.exports = function (app, passport, models, helpers) {
+module.exports = function (app, passport, models) {
   // Protected route that requries authentication via authorization header
-  app.get('/symptomdiaryentry', function (req, res, next) {
-    //usage of query parameters: req.query.query_parameter
-    var test = models.SymptomDiaryEntry.findAll({})
+  app.get('/symptomdiaryentry', (req, res) => {
+    // usage of query parameters: req.query.query_parameter
+    models.SymptomDiaryEntry.findAll({})
       .then(symptomdiaryentries => res.send(symptomdiaryentries));
   });
 
-  app.get('/symptomdiaryentry/:id', function (req, res, next) {
-    return models.SymptomDiaryEntry.findById(req.params.id)
-        .then(symptomdiaryentry = > res.send(symptomdiaryentry)
+  app.get('/symptomdiaryentry/:id', (req, res) => models.SymptomDiaryEntry.findById(req.params.id)
+        .then(symptomdiaryentry => res.send(symptomdiaryentry)
     )
-      .catch(function (err) {
-        res.send('Error: ' + err);
-      });
-  });
+      .catch(err => {
+        res.send(`Error: ${err}`);
+      }));
 
-  app.del('/symptomdiaryentry/:id', function (req, res, next) {
+  app.del('/symptomdiaryentry/:id', (req, res) => {
     models.SymptomDiaryEntry.destroy({
       where: {
         'id': req.params.id
       }
-    }).then(function (result) {
-      res.send('Result: ' + result);
-    }).catch(function (err) {
-      res.send('Error: ' + err);
+    }).then(result => {
+      res.send(`Result: ${result}`);
+    }).catch(err => {
+      res.send(`Error: ${err}`);
     });
   });
 
-  app.put('/symptomdiaryentry', function (req, res, next) {
-    //TODO
+  app.put('/symptomdiaryentry', (req, res) => {
+    // TODO
   });
 
-  app.post('/symptomdiaryentry', function (req, res, next) {
-    return sequelize.transaction(function (t) {
+  app.post('/symptomdiaryentry', (req, res) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
-      return models.SymptomDiaryEntry.create({
-        date: new Date(Date.now()),
-        intensity: req.body.intensity
-      });
-    }).then(function (result) {
+       models.SymptomDiaryEntry.create({
+         date: new Date(Date.now()),
+         intensity: req.body.intensity
+       })).then(result => {
       // Transaction has been committed
       // result is whatever the result of the promise chain returned to the transaction callback
-      res.send('Result: ' + result);
-    }).catch(function (err) {
+         res.send(`Result: ${result}`);
+       }).catch(err => {
       // Transaction has been rolled back
       // err is whatever rejected the promise chain returned to the transaction callback
-      res.send('Error: ' + err);
-    });
-  });
+         res.send(`Error: ${err}`);
+       }));
 };
