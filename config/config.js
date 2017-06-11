@@ -7,6 +7,7 @@ const config = {
   define: {
     "timestamps": false
   },
+  dialect: 'mysql',
 
   migrationStorage: "sequelize"
 };
