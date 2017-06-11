@@ -22,9 +22,45 @@ if (config.use_env_variable) {
 
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
-  app.get('/meal', (req, res, next) =>
-    // usage of query parameters: req.query.query_parameter
-     models.Meal.findAll({}).then(meals => res.send(meals)));
+  app.get('/meal', (req, res, next) => {
+    if (Object.keys(req.query).length > 0) {
+      if (req.query.limit && req.query.offset && req.query.ordercol && req.query.order) {
+        models.Meal.findAll({
+          order: sequelize.literal(`${req.query.ordercol} ${req.query.order}`),
+          offset: parseInt(req.query.offset),
+          limit: parseInt(req.query.limit)
+        }).then(meals => res.send(meals)).catch(err => {
+          res.send(`Error: ${err}`);
+        });
+      } else if (req.query.limit && req.query.offset && req.query.order) {
+        models.Meal.findAll({
+          order: sequelize.literal(`name ${req.query.order}`),
+          offset: parseInt(req.query.offset),
+          limit: parseInt(req.query.limit)
+        }).then(meals => res.send(meals)).catch(err => {
+          res.send(`Error: ${err}`);
+        });
+      } else if (req.query.limit && req.query.offset) {
+        models.Meal.findAll({
+          offset: parseInt(req.query.offset),
+          limit: parseInt(req.query.limit)
+        }).then(meals => res.send(meals)).catch(err => {
+          res.send(`Error: ${err}`);
+        });
+      } else if (req.query.ordercol && req.query.order) {
+        models.Meal.findAll({
+          order: sequelize.literal(`${req.query.ordercol} ${req.query.order}`)
+        }).then(meals => res.send(meals)).catch(err => {
+          res.send(`Error: ${err}`);
+        });
+      }
+    } else {
+      // usage of query parameters: req.query.query_parameter
+      models.Meal.findAll({}).then(meals => res.send(meals));
+    }
+  })
+  ;
+
 
   app.get('/meal/:id', (req, res, next) =>
     // usage of query parameters: req.query.query_parameter
