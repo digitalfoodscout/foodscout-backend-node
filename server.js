@@ -58,8 +58,8 @@ module.exports = {
       logger.error('Unable to connect to the database:', err);
       process.exit(7);
     });
-    app.listen(() => {
+   /* app.listen(() => {
       require('./document')(app.router.mounts);
-    });
+    });*/
   }
 };
