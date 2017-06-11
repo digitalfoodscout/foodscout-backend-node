@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const SymptomDiaryEntry = sequelize.define("SymptomDiaryEntry", {
+  const Contains = sequelize.define("Contains", {
     id: {
       type: DataTypes.INTEGER,
       unique: true,
@@ -8,23 +8,19 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    intensity: {
+    amount: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    symptomId: {
+    dish_id: {
       type: DataTypes.INTEGER,
-      references: 'Symptoms',
-      referencesKey: 'id'
+      references: 'Meals',
+      referencesKey: 'id',
+      allowNull: false
     },
-    userId: {
+    food_id: {
       type: DataTypes.INTEGER,
-      references: 'Users',
-      referencesKey: 'id'
+      allowNull: false
     }
   }, {
     classMethods: {
@@ -33,5 +29,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   });
-  return SymptomDiaryEntry;
+  return FoodDiaryEntry;
 };

@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const FoodDiaryEntry = sequelize.define("FoodDiaryEntry", {
+  const Suffered_From = sequelize.define("Suffered_From", {
     id: {
       type: DataTypes.INTEGER,
       unique: true,
@@ -12,9 +12,13 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: false
     },
-    mealId: {
+    intensity: {
       type: DataTypes.INTEGER,
-      references: 'Meals',
+      allowNull: false
+    },
+    symptomId: {
+      type: DataTypes.INTEGER,
+      references: 'Symptoms',
       referencesKey: 'id'
     },
     userId: {
@@ -29,5 +33,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   });
-  return FoodDiaryEntry;
+  return SymptomDiaryEntry;
 };
