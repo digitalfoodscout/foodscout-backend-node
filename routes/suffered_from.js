@@ -1,16 +1,11 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
 const Sequelize = require("sequelize");
-const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(`${__dirname}/../config/config.js`)[env];
 const logger = require('../logger');
 
 config.logging = logger.debug;
-
-const db = {};
 
 let sequelize;
 
@@ -20,22 +15,23 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-module.exports = function (app, passport, models, helpers) {
+module.exports = function (app, passport, models) {
   // Protected route that requries authentication via authorization header
-  app.get('/fooddiaryentry', (req, res, next) => models.FoodDiaryEntry.findAll({})
-      .then(fooddiaryentries => res.send(fooddiaryentries))
-      .catch(err => {
-        res.send('Error ${err}');
-      }));
+  app.get('/suffered_from', (req, res) => {
+    // usage of query parameters: req.query.query_parameter
+    models.SymptomDiaryEntry.findAll({})
+      .then(symptomdiaryentries => res.send(symptomdiaryentries));
+  });
 
-  app.get('/fooddiaryentry/:id', (req, res, next) => models.FoodDiaryEntry.findById(req.params.id)
-      .then(fooddiaryentry => res.send(fooddiaryentry))
+  app.get('/suffered_from/:id', (req, res) => models.SymptomDiaryEntry.findById(req.params.id)
+        .then(symptomdiaryentry => res.send(symptomdiaryentry)
+    )
       .catch(err => {
         res.send(`Error: ${err}`);
       }));
 
-  app.del('/fooddiaryentry/:id', (req, res, next) => {
-    models.FoodDiaryEntry.destroy({
+  app.del('/suffered_from/:id', (req, res) => {
+    models.SymptomDiaryEntry.destroy({
       where: {
         'id': req.params.id
       }
@@ -46,14 +42,15 @@ module.exports = function (app, passport, models, helpers) {
     });
   });
 
-  app.put('/fooddiaryentry', (req, res, next) => {
+  app.put('/suffered_from', (req, res) => {
     // TODO
   });
 
-  app.post('/fooddiaryentry', (req, res, next) => sequelize.transaction(t => 
+  app.post('/suffered_from', (req, res) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
-       models.FoodDiaryEntry.create({
-         date: new Date(Date.now())
+       models.SymptomDiaryEntry.create({
+         date: new Date(Date.now()),
+         intensity: req.body.intensity
        })).then(result => {
       // Transaction has been committed
       // result is whatever the result of the promise chain returned to the transaction callback
@@ -63,5 +60,4 @@ module.exports = function (app, passport, models, helpers) {
       // err is whatever rejected the promise chain returned to the transaction callback
          res.send(`Error: ${err}`);
        }));
-}
-;
+};

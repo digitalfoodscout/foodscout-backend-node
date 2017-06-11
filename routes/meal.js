@@ -22,11 +22,11 @@ if (config.use_env_variable) {
 
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
-  app.get('/meal', (req, res, next) => 
+  app.get('/meal', (req, res, next) =>
     // usage of query parameters: req.query.query_parameter
      models.Meal.findAll({}).then(meals => res.send(meals)));
 
-  app.get('/meal/:id', (req, res, next) => 
+  app.get('/meal/:id', (req, res, next) =>
     // usage of query parameters: req.query.query_parameter
      models.Meal.findById(req.params.id)
       .then(meal => res.send(meal))
@@ -50,11 +50,14 @@ module.exports = function (app, passport, models, helpers) {
     // TODO
   });
 
-  app.post('/meal', (req, res, next) => sequelize.transaction(t => 
+  //TODO: Insert correct UserId
+  app.post('/meal', (req, res, next) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
        models.Meal.create({
          name: req.body.name,
-         public: true
+         public: true,
+         user_id: 1,
+         date: new Date(Date.now())
        })).then(result => {
       // Transaction has been committed
       // result is whatever the result of the promise chain returned to the transaction callback
