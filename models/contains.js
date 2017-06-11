@@ -29,5 +29,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   });
-  return FoodDiaryEntry;
+  return Contains;
 };

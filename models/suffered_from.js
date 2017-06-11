@@ -33,5 +33,5 @@ module.exports = function (sequelize, DataTypes) {
       }
     }
   });
-  return SymptomDiaryEntry;
+  return Suffered_From;
 };

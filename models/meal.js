@@ -18,12 +18,14 @@ module.exports = function(sequelize, DataTypes) {
         },
         userId:{
             type: DataTypes.INTEGER,
-            references: 'Users',
-            referencesKey: 'id',
+            references:{
+              model: 'Users',
+              key: 'id'
+            },
             allowNull: true
         },
         date:{
-            type: DataTypes.Date,
+            type: DataTypes.DATE,
             allowNull: false
         }
     }, {
