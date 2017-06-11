@@ -22,20 +22,20 @@ if (config.use_env_variable) {
 
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
-  app.get('/Contains', (req, res, next) => models.FoodDiaryEntry.findAll({})
-      .then(fooddiaryentries => res.send(fooddiaryentries))
+  app.get('/Contains', (req, res, next) => models.Contains.findAll({})
+      .then(Contains => res.send(Contains))
       .catch(err => {
         res.send('Error ${err}');
       }));
 
-  app.get('/Contains/:id', (req, res, next) => models.FoodDiaryEntry.findById(req.params.id)
-      .then(fooddiaryentry => res.send(fooddiaryentry))
+  app.get('/Contains/:id', (req, res, next) => models.Contains.findById(req.params.id)
+      .then(Contains => res.send(Contains))
       .catch(err => {
         res.send(`Error: ${err}`);
       }));
 
   app.del('/Contains/:id', (req, res, next) => {
-    models.FoodDiaryEntry.destroy({
+    models.Contains.destroy({
       where: {
         'id': req.params.id
       }
@@ -52,7 +52,7 @@ module.exports = function (app, passport, models, helpers) {
 
   app.post('/Contains', (req, res, next) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
-       models.FoodDiaryEntry.create({
+       models.Contains.create({
          date: new Date(Date.now())
        })).then(result => {
       // Transaction has been committed

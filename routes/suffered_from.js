@@ -19,19 +19,19 @@ module.exports = function (app, passport, models) {
   // Protected route that requries authentication via authorization header
   app.get('/suffered_from', (req, res) => {
     // usage of query parameters: req.query.query_parameter
-    models.SymptomDiaryEntry.findAll({})
-      .then(symptomdiaryentries => res.send(symptomdiaryentries));
+    models.Suffered_From.findAll({})
+      .then(suffered_from => res.send(suffered_from));
   });
 
-  app.get('/suffered_from/:id', (req, res) => models.SymptomDiaryEntry.findById(req.params.id)
-        .then(symptomdiaryentry => res.send(symptomdiaryentry)
+  app.get('/suffered_from/:id', (req, res) => models.Suffered_From.findById(req.params.id)
+        .then(suffered_from => res.send(suffered_from)
     )
       .catch(err => {
         res.send(`Error: ${err}`);
       }));
 
   app.del('/suffered_from/:id', (req, res) => {
-    models.SymptomDiaryEntry.destroy({
+    models.Suffered_From.destroy({
       where: {
         'id': req.params.id
       }
@@ -48,7 +48,7 @@ module.exports = function (app, passport, models) {
 
   app.post('/suffered_from', (req, res) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
-       models.SymptomDiaryEntry.create({
+       models.Suffered_From.create({
          date: new Date(Date.now()),
          intensity: req.body.intensity
        })).then(result => {
