@@ -21,10 +21,10 @@ if (config.use_env_variable) {
 }
 
 module.exports = function (app, passport, models, helpers) {
+  const queryBuilder = require('../helpers/queries');
   // Protected route that requries authentication via authorization header
   app.get('/meal', (req, res, next) => {
-    const options = mealQueries(req.query);
-    models.Meal.findAll(options).then(meals => res.send(meals)).catch(err => {
+    models.Meal.findAll(queryBuilder(req.query, 'name')).then(meals => res.send(meals)).catch(err => {
       res.send(`Error: ${err}`);
     });
   });
@@ -72,31 +72,4 @@ module.exports = function (app, passport, models, helpers) {
     }));
 };
 
-function mealQueries(query) {
-  const options = {};
-  if (Object.keys(query).length > 0) {
-    // Limiting
-    if (query.limit) {
-      options.limit = parseInt(query.limit);
-    }
-    // Limiting and Pagination
-    if (query.limit && query.offset) {
-      options.offset = parseInt(query.offset);
-    }
-    // Ordering
-    if (query.order && query.col) {
-      options.order = sequelize.literal(`${query.col} ${query.order}`);
-    } else if (query.order) {
-      options.order = sequelize.literal(`name ${query.order}`);
-    }
-    // Prefixsearch
-    if (query.name) {
-      options.where = {
-        name: {
-          $like: `${query.name}%`
-        }
-      };
-    }
-    return options;
-  }
-}
+
