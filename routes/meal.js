@@ -23,32 +23,11 @@ if (config.use_env_variable) {
 module.exports = function (app, passport, models, helpers) {
   // Protected route that requries authentication via authorization header
   app.get('/meal', (req, res, next) => {
-    const options = {};
-    if (Object.keys(req.query).length > 0) {
-      if (req.query.limit) {
-        options.limit = parseInt(req.query.limit);
-      }
-      if (req.query.limit && req.query.offset) {
-        options.offset = parseInt(req.query.offset);
-      }
-      if (req.query.order && req.query.col) {
-        options.order = sequelize.literal(`${req.query.col} ${req.query.order}`);
-      } else if (req.query.order) {
-        options.order = sequelize.literal(`name ${req.query.order}`);
-      }
-      if (req.query.name) {
-        options.where = {
-          name: {
-            $like: `${req.query.name}%`
-          }
-        };
-      }
-    }
+    const options = mealQueries(req.query);
     models.Meal.findAll(options).then(meals => res.send(meals)).catch(err => {
       res.send(`Error: ${err}`);
     });
   });
-
 
   app.get('/meal/:id', (req, res, next) =>
     // usage of query parameters: req.query.query_parameter
@@ -92,3 +71,32 @@ module.exports = function (app, passport, models, helpers) {
       res.send(`Error: ${err}`);
     }));
 };
+
+function mealQueries(query) {
+  const options = {};
+  if (Object.keys(query).length > 0) {
+    // Limiting
+    if (query.limit) {
+      options.limit = parseInt(query.limit);
+    }
+    // Limiting and Pagination
+    if (query.limit && query.offset) {
+      options.offset = parseInt(query.offset);
+    }
+    // Ordering
+    if (query.order && query.col) {
+      options.order = sequelize.literal(`${query.col} ${query.order}`);
+    } else if (query.order) {
+      options.order = sequelize.literal(`name ${query.order}`);
+    }
+    // Prefixsearch
+    if (query.name) {
+      options.where = {
+        name: {
+          $like: `${query.name}%`
+        }
+      };
+    }
+    return options;
+  }
+}
