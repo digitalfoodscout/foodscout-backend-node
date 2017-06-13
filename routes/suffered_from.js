@@ -30,6 +30,7 @@ module.exports = function (app, passport, models) {
         res.send(`Error: ${err}`);
       }));
 
+  //TODO: Return Status-Code 200 "OK" and Authentication
   app.del('/suffered_from/:id', (req, res) => {
     models.Suffered_From.destroy({
       where: {
@@ -43,9 +44,10 @@ module.exports = function (app, passport, models) {
   });
 
   app.put('/suffered_from', (req, res) => {
-    // TODO
+    // TODO: Implement PUT
   });
 
+  //TODO: Return Status-Code 201 and Authentication
   app.post('/suffered_from', (req, res) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
        models.Suffered_From.create({

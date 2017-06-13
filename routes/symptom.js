@@ -34,6 +34,7 @@ module.exports = function (app, passport, models, helpers) {
         res.send(`Error: ${err}`);
       }));
 
+  //TODO: Return Status-Code 200 "OK" and Authentication
   app.del('/symptom/:id', (req, res, next) => {
     models.Symptom.destroy({
       where: {
@@ -47,10 +48,11 @@ module.exports = function (app, passport, models, helpers) {
   });
 
   app.put('/symptom', (req, res, next) => {
-    // TODO
+    // TODO: Implement PUT
   });
 
-  app.post('/symptom', (req, res, next) => sequelize.transaction(t => 
+  //TODO: Return Status-Code 201 and Authentication
+  app.post('/symptom', (req, res, next) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
        models.Symptom.create({
          date: new Date(Date.now())

@@ -1,7 +1,63 @@
 Definierte Schnittstellen
 =========================
+Wichtige Informationen:
+- Schnittstellen die mit `*` markiert sind, sind mit einer Authentifikation geschützt
+- Schnittstellen die mit `/` markiert sind, sind noch nicht (vollständig) implementiert
 
+Benutzer
+--------
+- GET `/user/id` Gibt den Benutzer mit der übergebenen Id _id_ zurück    
+- GET `/user` Gibt alle Benutzer der Datenbank zurück
+- `*` POST `/user` Speichert den übergebenen Nutzer in der Datenbank. Bei erfolgreichem Hinzufügen wird der HTTP-Code `201 - Created` zurückgegeben
+- `/` PUT `/user` Updatet einen Nutzer in der Datenbank mit den übergebenen Daten
+- `/` DELETE `/user/id` Löscht den Benutzer mit der Id _id_ aus der Datenbank und gibt bei erfolgreicher Löschung den HTTP-Code `200 - Ok` zurück
 
+Authentifizierung
+-----------------
+- `*` POST `/authenticate` Loggt einen Nutzer ein und gibt einen Access-Token zurück, mit dem spätere Authentifizierungen möglich sind
+ 
+Symptome
+--------
+- GET `/symptom/id` Gibt das Symptom mit der übergebenen _id_ zurück    
+- GET `/symptom` Gibt alle Symptome der Datenbank zurück
+- `/` POST `/symptom` Speichert das übergebene Symptom in der Datenbank. Bei erfolgreichem Hinzufügen wird der HTTP-Code `201 - Created` zurückgegeben
+- `/` PUT `/symptom` Updatet einen Nutzer in der Datenbank mit den übergebenen Daten
+- `/` DELETE `/symptom/id` Löscht das Symptom mit der Id _id_ aus der Datenbank und gibt bei erfolgreicher Löschung den HTTP-Code `200 - Ok` zurück
+ 
+Meals
+--------
+- GET `/meal/id` Gibt das Meal mit der übergebenen _id_ zurück    
+- GET `/meal` Gibt alle Meals der Datenbank zurück
+- `/` POST `/meal` Speichert das übergebene Meal in der Datenbank. Bei erfolgreichem Hinzufügen wird der HTTP-Code `201 - Created` zurückgegeben
+- `/` PUT `/meal` Updatet ein Meal in der Datenbank mit den übergebenen Daten
+- `/` DELETE `/meal/id` Löscht das Meal mit der Id _id_ aus der Datenbank und gibt bei erfolgreicher Löschung den HTTP-Code `200 - Ok` zurück
+ 
+Suffered-From (Auftreten einer Beschwerde)
+--------
+- GET `/suffered_from/id` Gibt das Auftreten einer Beschwerde mit der übergebenen _id_ zurück    
+- GET `/suffered_from` Gibt alle Auftreten von Beschwerden aus der Datenbank zurück
+- `/` POST `/suffered_from` Speichert das übergebene Auftreten einer Beschwerde in der Datenbank. Bei erfolgreichem Hinzufügen wird der HTTP-Code `201 - Created` zurückgegeben
+- `/` PUT `/suffered_from` Updatet ein Auftreten einer Beschwerde in der Datenbank mit den übergebenen Daten
+- `/` DELETE `/suffered_from/id` Löscht das Auftreten einer Beschwerde mit der Id _id_ aus der Datenbank und gibt bei erfolgreicher Löschung den HTTP-Code `200 - Ok` zurück
+ 
+Contains (Verbindung von Meal zum Lebensmittelschlüssel LMS)
+--------
+- GET `/contains/id` Gibt die Verbindung zwischen einem Meal und dem LMS mit der übergebenen _id_ zurück    
+- GET `/contains` Gibt alle Verbindungen zwischen einem Meal und dem LMS aus der Datenbank zurück
+- `/` POST `/contains` Speichert eine neue Verbindung zwischen einem Meal und dem LMS in der Datenbank. Bei erfolgreichem Hinzufügen wird der HTTP-Code `201 - Created` zurückgegeben
+- `/` PUT `/contains` Updatet eine Verbindung zwischen einem Meal und dem LMS in der Datenbank mit den übergebenen Daten
+- `/` DELETE `/contains/id` Löscht die Verbindung zwischen einem Meal und dem LMS mit der Id _id_ aus der Datenbank und gibt bei erfolgreicher Löschung den HTTP-Code `200 - Ok` zurück
+
+Zustäzliche Query Parameter
+---------------------------
+- `&limit=x` Limitiert das Query-Ergebnis auf _x_ Daten
+- `&offset=y` Schneidet die ersten _y_ Ergebnisse aus dem Query-Ergebnis aus
+- `&col=column_name` Sortiert das Ergebnis nach der übergebenen Spalte _column_name_
+- `&order=ASC|DESC` Gibt die Sortierreihenfolge an. `ASC` sortiert aufsteigen und `DESC` sortiert absteigend
+- `&name=prefix_name` Führt eine Präfixsuche mit dem Argument _prefix_name_ aus
+
+Bisher sind diese zusätzlichen Query-Parameter nur für folgende Modelle vorhanden:
+1. Meal
 
 Anwendung starten
 =================

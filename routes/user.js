@@ -30,6 +30,7 @@ module.exports = (app, passport, models) => {
         res.send(`Error: ${err}`);
       }));
 
+  //TODO: Return Status-Code 200 "OK" and Authentication
   app.del('/user/:id', (req, res) => {
     models.User.destroy({
       where: {

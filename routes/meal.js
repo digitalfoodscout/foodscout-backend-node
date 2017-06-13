@@ -37,6 +37,7 @@ module.exports = function (app, passport, models, helpers) {
         res.send(`Error: ${err}`);
       }));
 
+  //TODO: Return Status-Code 200 "OK" and Authentication
   app.del('/meal/:id', (req, res, next) => {
     models.Meal.destroy({
       where: {
@@ -50,10 +51,11 @@ module.exports = function (app, passport, models, helpers) {
   });
 
   app.put('/meal', (req, res, next) => {
-    // TODO
+    // TODO: Implement PUT
   });
 
-  // TODO: Insert correct UserId
+  //TODO: Insert correct UserId
+  //TODO: Return Status-Code 201 and Authentication
   app.post('/meal', (req, res, next) => sequelize.transaction(t =>
     // chain all your queries here. make sure you return them.
     models.Meal.create({
