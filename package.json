@@ -12,7 +12,7 @@
     "password-hash-and-salt": "^0.1.4",
     "restify": "^4.3.0",
     "sequelize": "^4.0.0",
-    "winston": "^2.3.1",
+    "winston": "^2.3.1"
   },
   "repository": {
     "type": "git",
