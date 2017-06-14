@@ -55,7 +55,7 @@ module.exports = function (app, passport, models, helpers) {
   app.post('/symptom', (req, res, next) => sequelize.transaction(t =>
       // chain all your queries here. make sure you return them.
        models.Symptom.create({
-         date: new Date(Date.now())
+         name: req.body.name
        })).then(result => {
       // Transaction has been committed
       // result is whatever the result of the promise chain returned to the transaction callback
