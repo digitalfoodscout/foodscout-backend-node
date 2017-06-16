@@ -24,7 +24,7 @@ module.exports = function (app, passport, models, helpers) {
   const queryBuilder = require('../helpers/queries');
   // Protected route that requries authentication via authorization header
   app.get('/meal', (req, res, next) => {
-    models.Meal.findAll(queryBuilder(req.query, 'name')).then(meals => res.send(meals)).catch(err => {
+    models.Meal.findAll(queryBuilder(models.Meal, req.query, 'name')).then(meals => res.send(meals)).catch(err => {
       res.send(`Error: ${err}`);
     });
   });
@@ -37,7 +37,7 @@ module.exports = function (app, passport, models, helpers) {
         res.send(`Error: ${err}`);
       }));
 
-  //TODO: Return Status-Code 200 "OK" and Authentication
+  // TODO: Return Status-Code 200 "OK" and Authentication
   app.del('/meal/:id', (req, res, next) => {
     models.Meal.destroy({
       where: {
@@ -54,8 +54,8 @@ module.exports = function (app, passport, models, helpers) {
     // TODO: Implement PUT
   });
 
-  //TODO: Insert correct UserId
-  //TODO: Return Status-Code 201 and Authentication
+  // TODO: Insert correct UserId
+  // TODO: Return Status-Code 201 and Authentication
   app.post('/meal', (req, res, next) => sequelize.transaction(t =>
     // chain all your queries here. make sure you return them.
     models.Meal.create({
